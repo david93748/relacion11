@@ -22,7 +22,7 @@ public class PrincipalEjercicio3 {
 
 	private static void mostrarMenu() {
 		System.out.println(
-				"1. Nueva Pagina Consultada \n2. Consultar Historial completo \n3. Consultar Historial de un dia \n4. Borrar Historial \n5. Salir");
+				"1. Nueva Pagina Consultada \n2. Consultar Historial completo \n3. Consultar Historial de un dia \n4. Borrar Historial \n5. Borrar historial de un dia\n6. Numero de visitas a una pagina\n7. Borrar visitas a una pagina\n8. Salir");
 
 	}
 
@@ -56,6 +56,24 @@ public class PrincipalEjercicio3 {
 
 			}
 			case 5: {
+				LocalDate fecha=crearFecha();
+				historial.borrarHistorialDeUnDia(fecha);
+				System.out.println("Dia borrado del historial");
+				break;
+			}
+			case 6: {
+				String url=pedirCadena("Introduce la pagina a buscar");
+				int  numeroVisitas=historial.numeroDeVisitasPagina(url);
+				System.out.println("Has visitado la pagina "+url+" "+numeroVisitas+" veces");
+				break;
+			}
+			case 7: {
+				String url=pedirCadena("Introduce la pagina a borrar");
+				historial.borrarVisitasPagina(url);
+				System.out.println("Pagina borrada del historial");
+				break;
+			}
+			case 8: {
 				acabar = true;
 				break;
 			}

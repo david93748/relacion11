@@ -28,6 +28,45 @@ public class Historial {
 		historial.clear();
 	}
 
+	public void borrarHistorialDeUnDia(LocalDate fecha) {
+		Iterator<VisitaPaginaWeb> it = historial.iterator();
+		VisitaPaginaWeb paginaActual;
+		
+		while(it.hasNext()) {
+			paginaActual=it.next();
+			if(paginaActual.getFecha().toLocalDate().equals(fecha)) {
+				it.remove();
+			}
+		}
+	}
+
+	public void borrarVisitasPagina(String url) {
+		Iterator<VisitaPaginaWeb> it = historial.iterator();
+		VisitaPaginaWeb paginaActual;
+		
+		while(it.hasNext()) {
+			paginaActual=it.next();
+			if(paginaActual.getUrl().equals(url)) {
+				it.remove();
+			}
+		}
+	}
+
+	public int numeroDeVisitasPagina(String url) {
+		int visitasTotales=0;
+		Iterator<VisitaPaginaWeb> it = historial.iterator();
+		VisitaPaginaWeb paginaActual;
+		
+		while(it.hasNext()) {
+			paginaActual=it.next();
+			if(paginaActual.getUrl().equals(url)) {
+				visitasTotales++;
+			}
+		}
+		
+		return visitasTotales;
+	}
+
 	public String consultarHistorialPorDia(LocalDate fecha) {
 		StringBuilder sb = new StringBuilder();
 		Iterator<VisitaPaginaWeb> it = historial.iterator();
@@ -51,8 +90,8 @@ public class Historial {
 
 		sb.append("Historial: \n");
 
-		for (int i = historial.size()-1; i <= 0; i--) {
-			sb.append(historial.get(i)+"\n");
+		for (int i = historial.size() - 1; i >= 0; i--) {
+			sb.append(historial.get(i) + "\n");
 		}
 		return sb.toString();
 	}
