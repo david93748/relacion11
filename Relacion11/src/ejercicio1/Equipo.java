@@ -25,41 +25,45 @@ public class Equipo {
 		insertado = conjuntoAlumnos.add(nuevoAlumno);
 
 		if (insertado == false) {
-			throw new EquipoException("El alumno no ha podido ser añadido");
+			throw new EquipoException("El alumno no ha podido ser añadido porque hay otro dni igual");
 		}
 
 	}
 
 	public void borrarAlumno(Alumno alumnoABorrar) throws EquipoException {
-		Iterator<Alumno> it=conjuntoAlumnos.iterator();
-		boolean borrado=false;
-		
-		while (it.hasNext()&&borrado==false) {
+		Iterator<Alumno> it = conjuntoAlumnos.iterator();
+		boolean borrado = false;
+
+		while (it.hasNext() && borrado == false) {
 			Alumno alumno = (Alumno) it.next();
-			if(alumno.equals(alumnoABorrar)) {
+			if (alumno.equals(alumnoABorrar)) {
 				it.remove();
-				borrado=true;
+				borrado = true;
 			}
 		}
-		
-		if(borrado==false) {
+
+		if (borrado == false) {
 			throw new EquipoException("El alumno no ha sido encontrado");
 		}
 
 	}
 
 	public Alumno buscarAlumno(Alumno alumnoBuscado) {
-		Iterator<Alumno> it=conjuntoAlumnos.iterator();
-		boolean encontrado=false;
-		Alumno alumnoEncontrado;
-		
-		while (it.hasNext()&&borrado==false) {
+		Iterator<Alumno> it = conjuntoAlumnos.iterator();
+		boolean encontrado = false;
+		Alumno alumnoEncontrado = null;
+
+		while (it.hasNext() && encontrado == false) {
 			alumnoEncontrado = (Alumno) it.next();
-			if(alumnoEncontrado.equals(alumnoBuscado)) {
-				encontrado==true;
+			if (alumnoEncontrado.equals(alumnoBuscado)) {
+				encontrado = true;
 			}
 		}
+		if(encontrado==false) {
+			alumnoEncontrado=null;
+		}
 
+		return alumnoEncontrado;
 	}
 
 	/**
@@ -68,8 +72,20 @@ public class Equipo {
 	 * @param otro   Otro equipo que se va a unir
 	 * @param nombre Nombre del nuevo equipo
 	 * @return nuevo equipo resultado de unir los dos anteriores
+	 * @throws EquipoException
 	 */
 	public Equipo fusionDeEquipos(Equipo otro, String nombre) {
+		Equipo nuevoEquipo = new Equipo(nombre);
+
+		for (Alumno alumno : conjuntoAlumnos) {
+				nuevoEquipo.conjuntoAlumnos.add(alumno);
+		}
+
+		for (Alumno alumno : otro.conjuntoAlumnos) {
+				nuevoEquipo.conjuntoAlumnos.add(alumno);
+		}
+
+		return nuevoEquipo;
 
 	}
 
@@ -80,14 +96,32 @@ public class Equipo {
 	 * @param otro   Otro equipo
 	 * @param nombre Nombre del nuevo equipo intersección
 	 * @return Equipo resultado de la intersección
+	 * @throws EquipoException
 	 */
-	public Equipo intersecionDeEquipos(Equipo otro, String nombre) {
+	public Equipo intersecionDeEquipos(Equipo otro, String nombre) throws EquipoException {
+		Equipo nuevoEquipo = new Equipo(nombre);
 
+		for (Alumno alumno : conjuntoAlumnos) {
+			for (Alumno alumno2 : otro.conjuntoAlumnos) {
+				if (alumno.equals(alumno2)) {
+					nuevoEquipo.conjuntoAlumnos.add(alumno);
+				}
+			}
+		}
+		return nuevoEquipo;
 	}
 
 	@Override
 	public String toString() {
+		StringBuilder sb = new StringBuilder();
 
+		sb.append(nombreEquipo + ". Jugadores: ");
+
+		for (Alumno alumno : conjuntoAlumnos) {
+			sb.append(alumno.getNombre() + " ");
+		}
+
+		return sb.toString();
 	}
 
 }
