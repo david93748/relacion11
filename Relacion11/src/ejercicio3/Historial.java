@@ -31,10 +31,10 @@ public class Historial {
 	public void borrarHistorialDeUnDia(LocalDate fecha) {
 		Iterator<VisitaPaginaWeb> it = historial.iterator();
 		VisitaPaginaWeb paginaActual;
-		
-		while(it.hasNext()) {
-			paginaActual=it.next();
-			if(paginaActual.getFecha().toLocalDate().equals(fecha)) {
+
+		while (it.hasNext()) {
+			paginaActual = it.next();
+			if (paginaActual.getFecha().toLocalDate().equals(fecha)) {
 				it.remove();
 			}
 		}
@@ -43,27 +43,27 @@ public class Historial {
 	public void borrarVisitasPagina(String url) {
 		Iterator<VisitaPaginaWeb> it = historial.iterator();
 		VisitaPaginaWeb paginaActual;
-		
-		while(it.hasNext()) {
-			paginaActual=it.next();
-			if(paginaActual.getUrl().equals(url)) {
+
+		while (it.hasNext()) {
+			paginaActual = it.next();
+			if (paginaActual.getUrl().equals(url)) {
 				it.remove();
 			}
 		}
 	}
 
 	public int numeroDeVisitasPagina(String url) {
-		int visitasTotales=0;
+		int visitasTotales = 0;
 		Iterator<VisitaPaginaWeb> it = historial.iterator();
 		VisitaPaginaWeb paginaActual;
-		
-		while(it.hasNext()) {
-			paginaActual=it.next();
-			if(paginaActual.getUrl().equals(url)) {
+
+		while (it.hasNext()) {
+			paginaActual = it.next();
+			if (paginaActual.getUrl().equals(url)) {
 				visitasTotales++;
 			}
 		}
-		
+
 		return visitasTotales;
 	}
 
