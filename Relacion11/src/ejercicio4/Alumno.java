@@ -61,12 +61,12 @@ public class Alumno extends Persona{
 		this.curso = curso;
 	}
 	
-	public void enviarMensaje(Persona destinatario, String msg) throws IESException {
+	public void enviarMensaje(Persona destinatario,String asunto, String msg) throws IESException {
 		if(this.getEdad()<MAYOR_EDAD&&destinatario instanceof Alumno) {
 			throw new IESException("Los alumnos menores de edad solo pueden mandar mensajes a profesores");
 		}
 		
-		super.enviarMensaje(destinatario, msg);
+		super.enviarMensaje(destinatario,asunto, msg);
 	}
 
 

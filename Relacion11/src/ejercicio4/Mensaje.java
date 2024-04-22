@@ -7,14 +7,18 @@ import java.time.format.DateTimeFormatter;
 
 public class Mensaje  implements Comparable<Mensaje>{
 	private Persona remitente;
+	private String asunto;
 	private String texto;
 	private LocalDateTime hora;
+	private boolean leido;
 	
-	public Mensaje(Persona remitente, String texto) {
+	public Mensaje(Persona remitente, String asunto,String texto) {
 		
 		this.remitente = remitente;
 		this.texto = texto;
+		this.asunto=asunto;
 		hora=LocalDateTime.now();
+		leido=false;
 	}
 
 	public Persona getRemitente() {
@@ -22,8 +26,16 @@ public class Mensaje  implements Comparable<Mensaje>{
 	}
 
 
+	public String getAsunto() {
+		return asunto;
+	}
+	
 	public String getTexto() {
 		return texto;
+	}
+	
+	public boolean isLeido() {
+		return leido;
 	}
 
 
@@ -34,7 +46,8 @@ public class Mensaje  implements Comparable<Mensaje>{
 	@Override
 	public String toString() {
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-uuuu hh:mm");
-		return "Mensaje De: " + remitente.getNombre() + " Texto: " + texto + ", Fecha " + df.format( hora );
+		leido=true;
+		return "Remitente: " + remitente.getNombre() +"\nAsunto:"+asunto+ "\nTexto: " + texto + "\n Fecha: " + df.format( hora );
 	}
 
 	@Override

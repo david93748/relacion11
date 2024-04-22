@@ -82,9 +82,9 @@ public abstract class Persona {
 		return true;
 	}
 
-	public void enviarMensaje(Persona destinatario, String msg) throws IESException {
+	public void enviarMensaje(Persona destinatario,String asunto, String msg) throws IESException {
 
-		destinatario.buzonEntrada.addFirst(new Mensaje(this, msg));
+		destinatario.buzonEntrada.addFirst(new Mensaje(this,asunto, msg));
 	}
 
 	public String mostrarMensajes() throws IESException {
@@ -92,6 +92,7 @@ public abstract class Persona {
 		StringBuilder sb = new StringBuilder();
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/uuuu hh:mm");
 		int contador = 1;
+		String leido;
 
 		if (buzonEntrada.isEmpty()) {
 			throw new IESException("No tienes mensajes");
@@ -101,8 +102,13 @@ public abstract class Persona {
 
 		while (it.hasNext()) {
 			Mensaje mensaje = (Mensaje) it.next();
-			sb.append("\nMensaje " + contador + ": De: " + mensaje.getRemitente().getNombre() + " Texto: \n"
-					+ mensaje.getTexto() + "\n Fecha y Hora: " + df.format(mensaje.getHora()));
+			if(mensaje.isLeido()) {
+				sb.append("\n📭");
+			}else {
+				sb.append("\n📬");
+			}
+			sb.append(" Mensaje " + contador + ": De: " + mensaje.getRemitente().getNombre() + " Asunto: \n"
+					+ mensaje.getAsunto() + "\n Fecha y Hora: " + df.format(mensaje.getHora()));
 			contador++;
 		}
 
@@ -170,6 +176,15 @@ public abstract class Persona {
 		sb.append("\n NO HAY MAS MENSAJES");
 
 		return sb.toString();
+	}
+	
+	public String leerMensaje(int num) throws IESException {
+		if (num > buzonEntrada.size()||num<1) {
+			throw new IESException("No se ha encontrado ese mensaje");
+
+		}
+		return buzonEntrada.get(num-1).toString();
+
 	}
 
 }
