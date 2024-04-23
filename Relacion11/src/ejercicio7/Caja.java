@@ -44,6 +44,9 @@ public class Caja {
 		if(this.abierta==false) {
 			throw new CajaException("La caja ya esta cerrada");
 		}
+		if(cola.size()>0) {
+			throw new CajaException("La caja aun tiene clientes esperando");
+		}
 		
 		this.abierta=false;
 	}

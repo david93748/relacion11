@@ -17,6 +17,14 @@ public class Mercadona {
 		}
 	}
 	
+	public void abrirCaja(int numeroCaja) throws CajaException {
+		cajasMercadona.get(numeroCaja-1).abrirCaja();;
+	}
+	
+	public void cerrarCaja(int numeroCaja) throws CajaException {
+		cajasMercadona.get(numeroCaja-1).cerrarCaja();;
+	}
+	
 	public String nuevoCliente() throws CajaException {
 		Iterator<Caja> it=cajasMercadona.iterator();
 		Caja cajaMasVacia=cajasMercadona.get(0);
