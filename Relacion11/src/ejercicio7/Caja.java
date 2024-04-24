@@ -51,7 +51,7 @@ public class Caja {
 		this.abierta=false;
 	}
 	
-	public String annadirCliente() throws CajaException {
+	public int annadirCliente() throws CajaException {
 		if(this.abierta==false) {
 			throw new CajaException("La caja esta cerrada");
 		}
@@ -59,10 +59,10 @@ public class Caja {
 		cola.add(ultimoNumero+1);
 		ultimoNumero=ultimoNumero+1;
 		
-		return "Es usted el cliente número "+ultimoNumero+" y debe ir a la caja número "+this.numeroCaja;
+		return ultimoNumero;
 	}
 	
-	public String atenderCliente() throws CajaException {
+	public int atenderCliente() throws CajaException {
 		if(this.abierta==false) {
 			throw new CajaException("La caja esta cerrada");
 		}
@@ -70,9 +70,8 @@ public class Caja {
 			throw new CajaException("No hay clientes en la cola");
 		}
 		
-		Integer clienteAtendido=cola.remove(0);
 		
-		return "Se ha atendido al cliente con número "+clienteAtendido;
+		return cola.remove(0);
 	}
 	
 	

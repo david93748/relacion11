@@ -57,7 +57,8 @@ public class Principal {
 			break;
 		case 4:
 			numero = pedirNumero("¿De que caja quieres que se atienda un cliente?");
-			System.out.println(mercadona.atenderCliente(numero));
+			numero=mercadona.atenderCliente(numero);
+			System.out.println("Se ha atendido al cliente con número "+numero);
 			break;
 		case 5:
 			System.out.println("Adios");

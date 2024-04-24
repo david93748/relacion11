@@ -5,43 +5,60 @@ import java.util.Iterator;
 
 public class Mercadona {
 
+	private static final int NUMERO_CAJAS = 20;
 	private ArrayList<Caja> cajasMercadona;
 
 	public Mercadona() {
 		cajasMercadona = new ArrayList<Caja>();
 	}
-	
+
 	public void crearCajas(int numeroCajas) {
 		for (int i = 0; i < numeroCajas; i++) {
-			cajasMercadona.add(new Caja(i+1));
+			cajasMercadona.add(new Caja(i + 1));
 		}
 	}
-	
+
 	public void abrirCaja(int numeroCaja) throws CajaException {
-		cajasMercadona.get(numeroCaja-1).abrirCaja();;
+		if(numeroCaja<1||numeroCaja>NUMERO_CAJAS) {
+			throw new CajaException("Esa caja no existe");
+		}
+		cajasMercadona.get(numeroCaja - 1).abrirCaja();
 	}
-	
+
 	public void cerrarCaja(int numeroCaja) throws CajaException {
-		cajasMercadona.get(numeroCaja-1).cerrarCaja();;
+		if(numeroCaja<1||numeroCaja>NUMERO_CAJAS) {
+			throw new CajaException("Esa caja no existe");
+		}
+		cajasMercadona.get(numeroCaja - 1).cerrarCaja();
 	}
-	
+
 	public String nuevoCliente() throws CajaException {
-		Iterator<Caja> it=cajasMercadona.iterator();
-		Caja cajaMasVacia=cajasMercadona.get(0);
+		Iterator<Caja> it = cajasMercadona.iterator();
+		Caja cajaMasVacia = null;
+		int numeroCliente;
+		int numeroClientesCajaMasVacia=Integer.MAX_VALUE;
 		
 		while (it.hasNext()) {
 			Caja caja = (Caja) it.next();
-			if(caja.getNumeroClientes()<cajaMasVacia.getNumeroClientes()) {
-				cajaMasVacia=caja;
+			if (caja.getNumeroClientes() < numeroClientesCajaMasVacia && caja.isAbierta()) {
+				cajaMasVacia = caja;
+				numeroClientesCajaMasVacia=cajaMasVacia.getNumeroClientes();
 			}
 		}
 		
-		return cajaMasVacia.annadirCliente();
-	}
-	
-	public String atenderCliente(int numeroCaja) throws CajaException {
-		Caja cajaAtender=cajasMercadona.get(numeroCaja-1);
+		if(cajaMasVacia == null) {
+			throw new CajaException("Todos las cajas estan cerradas");
+		}
 		
+		
+		numeroCliente=cajaMasVacia.annadirCliente();
+
+		return "Es usted el cliente "+numeroCliente+" y debe ir a la caja numero "+cajaMasVacia.getNumeroCaja();
+	}
+
+	public int atenderCliente(int numeroCaja) throws CajaException {
+		Caja cajaAtender = cajasMercadona.get(numeroCaja - 1);
+
 		return cajaAtender.atenderCliente();
 	}
 }
